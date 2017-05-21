@@ -55,11 +55,12 @@ function requisitar(i, resp, begin_time) {
 		}
 	});
 }
-app.get('/scrape', function (req, res) {
+app.get('/', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'});
-	list_users = [];
-	requisitar(0, res, new Date().getTime());
+	//list_users = [];
+	//requisitar(0, res, new Date().getTime());
+	res.send("<h1>Hello</h1>");
 });
-app.listen('8081');
+app.listen('5000');
 console.log('Magic happens on port 8081');
 exports = module.exports = app;
