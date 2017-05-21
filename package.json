@@ -1,0 +1,16 @@
+{
+  "name": "spoj-scraping",
+  "version": "1.0.0",
+  "description": "scraping for br.spoj.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pedro Augusto",
+  "license": "WTFPL",
+  "dependencies" : {
+    "express"    : "latest",
+    "request"    : "latest",
+    "cheerio"    : "latest"
+  }
+}
