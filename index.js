@@ -59,7 +59,8 @@ app.get('/', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	//list_users = [];
 	//requisitar(0, res, new Date().getTime());
-	res.send("<h1>Hello</h1>");
+	res.write("<h1>Hello</h1>");
+	res.end();
 });
 app.listen('5000');
 console.log('Magic happens on port 8081');
