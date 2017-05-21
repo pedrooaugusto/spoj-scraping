@@ -1,68 +1,51 @@
-var express = require('express');
-var fs = require('fs');
-var request = require('request');
-var cheerio = require('cheerio');
-var app = express();
+const express = require('express');
+const manage = require('./manageData');
+const app = express();
 
-var list_users = [];
-const names = 
-	['uc_pierry', 'uc_henrique', 'uc_brenda'];/*,'uc_pedroaug',
-		'uc_bruno', 'uc_yasmin', 'uc_ramon', 'uc_renatomoran',
-		'uc_philipemosv', 'uc_luiz', 'uc_joicepaz'];*/
-function showData(resp, totalTime) {
-	list_users.sort((a, b)=>{
-		return b.numero_problemas - a.numero_problemas;
-	});
-	resp.write("<html><meta charset='utf-8'><body>");
-	for (let i = 0; i < list_users.length; i++) {
-		resp.write("<details>");
-		resp.write("<summary>"+(i+1)+"º - "+list_users[i].usuario+" - "+list_users[i].numero_problemas+" problemas resolvidos</summary>");
-		resp.write("<ul type='none'>");
-		for (let j = 0; j < list_users[i].problemas_solved.length; j++) {
-			resp.write("<li><a href='"+list_users[i].problemas_solved[j].url+"'>"+list_users[i].problemas_solved[j].name+"</a></li>");
-		};
-		resp.write("</ul>");
-		resp.write("</details><br>");
-	};
-	resp.write("<h3>Total Time: "+totalTime+" ms</h3>");
-	resp.write("</body></html>");
-	resp.end();
-}
-function requisitar(i, resp, begin_time) {
-	request("http://br.spoj.com/users/"+names[i]+"/", function (err, res, htm) {
-		if(!err){
-			let user = {usuario: names[i], numero_problemas : '', problemas_solved: []};
-			let $ = cheerio.load(htm);
-			let listaProblemas = [];
-			let table = $("#content table:first-of-type");
-			table.find("tr").each(function (i, element) {
-				$(element).find("td").each(function (i, a) {
-					let txt = $(a).children().first().text();
-					if(txt != "")
-						listaProblemas.push({name : txt, url: "http://br.spoj.com/problems/"+txt+"/"});
-				});
-			});
-			user.numero_problemas = listaProblemas.length;
-			user.problemas_solved = listaProblemas;
-			if(i <= (names.length - 1)){
-				list_users.push(user);
-				i+=1;
-				requisitar(i, resp, begin_time);
-			}
-			else{
-				showData(resp, (new Date().getTime() - begin_time));
-			}
-		}
-	});
-}
 app.set('port', (process.env.PORT || 5000));
 app.get('/', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'});
-	list_users = [];
-	requisitar(0, res, new Date().getTime());
-	//res.write("<h1>Hello</h1>");
-	//res.end();
+	manage.loadDataBase(function (err, bd) {
+		displayData(bd, res);
+	});
+});
+app.get('/json', function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	manage.loadDataBase(function (err, bd) {
+		res.write("<pre>"+JSON.stringify(bd, null, 1)+"</pre>");
+		res.end();
+	});
 });
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+	console.log('Rodando na porta ', app.get('port'));
 });
+
+
+
+/* front end quebra galho */
+function displayData (data, res) {
+	data.list_users.sort((a, b)=>{
+		return b.numero_problemas - a.numero_problemas;
+	});
+	res.write("<html><meta charset='utf-8'><body>");
+		res.write("<h2>UC_Rank: br.spoj.com</h2>");
+		res.write("<h4>Arquivo: "+data.arquivo+"</h4>");
+		res.write("<h4>Ultima Atualizacao: "+data.ultimoUpdate+" proxíma em 6 horas</h4>");
+		res.write("<h4>Tempo de Load: "+data.tempoMontar+"ms</h4>");
+		res.write("<h4>Total listados: "+data.list_users.length+"</h4>");
+		for (let i = 0; i < data.list_users.length; i++) {
+			if(i == 0)
+				res.write("<details open>");
+			else
+				res.write("<details>");
+			res.write("<summary>"+(i+1)+"º - "+data.list_users[i].usuario+" - "+data.list_users[i].numero_problemas+" problemas resolvidos</summary>");
+			res.write("<ul type='none'>");
+				for (let j = 0; j < data.list_users[i].problemas_solved.length; j++) {
+					res.write("<li><a href='"+data.list_users[i].problemas_solved[j].url+"'>"+data.list_users[i].problemas_solved[j].name+"</a></li>");
+				};
+			res.write("</ul>");
+			res.write("</details><br>");
+	}
+	res.write("</body><p>Created by Pedro Augusto</p><a href='https://github.com/pedrooaugusto/spoj-scraping'>GITHUB</a></html>");
+	res.end();
+}
