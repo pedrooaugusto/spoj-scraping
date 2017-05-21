@@ -6,9 +6,9 @@ var app = express();
 
 var list_users = [];
 const names = 
-	['uc_pierry', 'uc_henrique', 'uc_brenda', 'uc_pedroaug',
+	['uc_pierry', 'uc_henrique', 'uc_brenda'];/*,'uc_pedroaug',
 		'uc_bruno', 'uc_yasmin', 'uc_ramon', 'uc_renatomoran',
-		'uc_philipemosv', 'uc_luiz', 'uc_joicepaz'];
+		'uc_philipemosv', 'uc_luiz', 'uc_joicepaz'];*/
 function showData(resp, totalTime) {
 	list_users.sort((a, b)=>{
 		return b.numero_problemas - a.numero_problemas;
@@ -58,10 +58,10 @@ function requisitar(i, resp, begin_time) {
 app.set('port', (process.env.PORT || 5000));
 app.get('/', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'});
-	//list_users = [];
-	//requisitar(0, res, new Date().getTime());
-	res.write("<h1>Hello</h1>");
-	res.end();
+	list_users = [];
+	requisitar(0, res, new Date().getTime());
+	//res.write("<h1>Hello</h1>");
+	//res.end();
 });
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
