@@ -55,6 +55,7 @@ function requisitar(i, resp, begin_time) {
 		}
 	});
 }
+app.set('port', (process.env.PORT || 5000));
 app.get('/', function (req, res) {
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	//list_users = [];
@@ -62,6 +63,6 @@ app.get('/', function (req, res) {
 	res.write("<h1>Hello</h1>");
 	res.end();
 });
-app.listen('5000');
-console.log('Magic happens on port 8081');
-exports = module.exports = app;
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
