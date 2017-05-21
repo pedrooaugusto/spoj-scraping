@@ -29,7 +29,7 @@ function displayData (data, res) {
 	});
 	res.write("<html><meta charset='utf-8'><body>");
 		res.write("<h2>UC_Rank: br.spoj.com</h2>");
-		res.write("<h4>Arquivo: "+data.arquivo+"</h4>");
+		res.write("<h4>Arquivo: <a href='/json'>"+data.arquivo+"</a></h4>");
 		res.write("<h4>Ultima Atualizacao: "+data.ultimoUpdate+" proxíma em 6 horas</h4>");
 		res.write("<h4>Tempo de Load: "+data.tempoMontar+"ms</h4>");
 		res.write("<h4>Total listados: "+data.list_users.length+"</h4>");
