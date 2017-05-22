@@ -3,7 +3,7 @@ const  scrap = require('./scrap');
 const manipulate = {
 	isUpToDate : function (data) {
 		let past = data.ultimoUpdate;
-		return ((new Date() - new Date(past))/(1000*60*60)) < 0;
+		return ((new Date() - new Date(past))/(1000*60*60)) < 12;
 	},
 	loadDataBase : function (callback) {
 		fs.readFile(__dirname+'/public/data/dados.txt', 'utf-8', function(err, data){
