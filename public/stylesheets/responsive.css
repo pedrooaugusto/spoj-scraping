@@ -1,0 +1,40 @@
+@media screen and (min-width: 320px) {
+	.title, .rank, .git{
+		width: 80%;
+	}
+	.title{
+		font-size: 2rem;
+	}
+	.info-wrapper .info{
+		font-size: 0.95rem;
+	}
+	.row{
+		width: 100%;
+	}
+	.col-sm-5{
+		display: inline-block;
+		width: 45%;
+		margin-right: 0px;
+		margin-top: 10px;
+	}
+}
+@media screen and (min-width: 992px) {
+	.title, .rank, .git{
+		width: 70%;
+	}
+	.title{
+		font-size: 2.3rem;
+	}
+	.info-wrapper .info{
+		font-size: 1.1rem;
+	}
+	.row{
+		width: 70%;
+	}
+	.col-md-2{
+		margin-bottom: 5px;
+		display: inline-block;
+		width: 20%;
+		margin-right: 10px;
+	}
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="../public/stylesheets/main.css" />
+	<link rel="stylesheet" type="text/css" href="../public/stylesheets/responsive.css" />
+	<title>UC Spoj rank!</title>
+</head>
+<body>
+	<div class="title-wrapper">
+		<div class="title">
+			Uni rank on br.spoj.com
+		</div>
+	</div>
+	<div class="rank-wrapper">
+		<div class="rank">
+			<div class="loading" style="display:none;" id="screen-load">
+				<div class="load">
+					<img src="../public/images/hourglass.svg" width=80 height=80 alt="loading"/>
+					<div class="load-txt">Loading...</div>
+				</div>
+			</div>
+			<div class="rank-content">
+				<div class="info-wrapper">
+					<div class="info">
+						<span class="label">Arquivo:</span>
+						<span class="value">dados.txt</span>
+					</div>
+					<div class="info">
+						<span class="label">Gerado em:</span>
+						<span class="value">2017-05-21 04:00:05</span>
+					</div>
+					<div class="info">
+						<span class="label">Tempo de construção:</span>
+						<span class="value">4888 ms</span>
+					</div>
+					<div class="info">
+						<span class="label">Usuários Listados:</span>
+						<span class="value">11</span>
+					</div>
+				</div>
+				<hr/>
+				<div class="rank-list">
+					<details class="people-on-list gold-medal">
+						<summary class="people-info">
+							<span class="position">1º</span> 
+							<span class="name">uc_pedroaug</span>
+						</summary>
+						<div class="table-wrapper">
+							<div class="row">
+								<div class="col-md-2 col-sm-5">OBITETRI</div>
+								<div class="col-md-2 col-sm-5">TROCOVOVO</div>
+								<div class="col-md-2 col-sm-5">pedro</div>
+								<div class="col-md-2 col-sm-5">pedro</div>
+							</div>
+						</div>
+					</details>
+					<details class="people-on-list silver-medal">
+						<summary class="people-info">
+							<span class="position">2º</span> 
+							<span class="name">uc_pedroaug</span>
+						</summary>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus totam ipsa repellendus qui quas quis ullam eius voluptatum accusantium magnam. Soluta ipsa itaque praesentium blanditiis dolore illo commodi dolor adipisci!</p>
+					</details>
+					<details class="people-on-list bronze-medal">
+						<summary class="people-info">
+							<span class="position">3º</span> 
+							<span class="name">uc_pedroaug</span>
+						</summary>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus totam ipsa repellendus qui quas quis ullam eius voluptatum accusantium magnam. Soluta ipsa itaque praesentium blanditiis dolore illo commodi dolor adipisci!</p>
+					</details>
+					<details class="people-on-list">
+						<summary class="people-info">
+							<span class="position">4º</span> 
+							<span class="name">uc_pedroaug</span>
+						</summary>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus totam ipsa repellendus qui quas quis ullam eius voluptatum accusantium magnam. Soluta ipsa itaque praesentium blanditiis dolore illo commodi dolor adipisci!</p>
+					</details>
+					<details class="people-on-list">
+						<summary class="people-info">
+							<span class="position">5º</span> 
+							<span class="name">uc_pedroaug</span>
+						</summary>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus totam ipsa repellendus qui quas quis ullam eius voluptatum accusantium magnam. Soluta ipsa itaque praesentium blanditiis dolore illo commodi dolor adipisci!</p>
+					</details>
+					<details class="people-on-list">
+						<summary class="people-info">
+							<span class="position">6º</span> 
+							<span class="name">uc_pedroaug</span>
+						</summary>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus totam ipsa repellendus qui quas quis ullam eius voluptatum accusantium magnam. Soluta ipsa itaque praesentium blanditiis dolore illo commodi dolor adipisci!</p>
+					</details>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="git-wrapper">
+		<div class="git">
+			<a href="">Github</a>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="txt">Desenvolvido por Pedro Augusto</div>
+	</div>
+</body>
+<script type="text/javascript">
+	onload = function () {
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', 'localhost:5000/json');
+		xhr.onload = function() {
+    		if (xhr.status === 200) {
+        		alert('User s name is ' + xhr.responseText);
+    		}
+    		else {
+        		alert('Request failed.  Returned status of ' + xhr.status);
+    		}
+		};
+		xhr.send();
+	}
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/responsive.css" />
+	<title>UC Spoj rank!</title>
+</head>
+<body>
+	<div class="title-wrapper">
+		<div class="title">
+			Uni rank on br.spoj.com
+		</div>
+	</div>
+	<div class="rank-wrapper">
+		<div class="rank">
+			<div class="loading" style="/*display:none;*/" id="screen-load">
+				<div class="load">
+					<img src="/images/hourglass.svg" width=80 height=80 alt="loading"/>
+					<div class="load-txt">Loading...</div>
+				</div>
+			</div>
+			<div id="rank-content" style="display:none">
+				<div class="info-wrapper">
+					<div class="info">
+						<span class="label">Arquivo:</span>
+						<span class="value" id="archive-name">dados.txt</span>
+					</div>
+					<div class="info">
+						<span class="label">Gerado em:</span>
+						<span class="value" id="last-update">2017-05-21 04:00:05</span>
+					</div>
+					<div class="info">
+						<span class="label">Tempo de construção:</span>
+						<span class="value" id="creation-time">4888 ms</span>
+					</div>
+					<div class="info">
+						<span class="label">Usuários Listados:</span>
+						<span class="value" id="total-people">11</span>
+					</div>
+				</div>
+				<hr/>
+				<div class="rank-list" id="rank-list">
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="git-wrapper">
+		<div class="git">
+			<a href="https://github.com/pedrooaugusto/spoj-scraping">Github</a>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="txt">Desenvolvido por Pedro Augusto</div>
+	</div>
+</body>
+<script type="text/javascript">
+	onload = function () {
+		let xhr = new XMLHttpRequest();
+		xhr.open('GET', 'json');
+		xhr.onload = function() {
+    		if (xhr.status === 200) {
+    			document.getElementById("screen-load").style.display = "none";
+    			document.getElementById("rank-content").style.display = "block";
+        		showData(JSON.parse(xhr.responseText));
+    		}
+    		else {
+        		alert('Request failed.  Returned status of ' + xhr.status);
+    		}
+		};
+		xhr.send();
+	}
+	function query(id, value, append) {
+		if(value == undefined)
+			return document.getElementById(id);
+		else
+			if(append == undefined)
+				document.getElementById(id).innerHTML = value;
+			else
+				document.getElementById(id).innerHTML += value;
+	}
+	function showData (data) {
+		query("archive-name", "<a href='json'>"+data.arquivo+"</a>");
+		query("last-update", data.ultimoUpdate);
+		query("creation-time", (data.tempoMontar/1000)+" s");
+		query("total-people", data.list_users.length);
+		const medals = ['gold-medal', 'silver-medal', 'bronze-medal'];
+		for (let i = 0; i < data.list_users.length; i++) {
+			let user = data.list_users[i];
+			if(i<=2)
+				query("rank-list", createDetails(i, user.usuario, medals[i], user.problemas_solved), "add");
+			else
+				query("rank-list", createDetails(i, user.usuario, "", user.problemas_solved), "add");
+		}
+	}
+	function createDetails (position, name, medal, problems) {
+		let str = "";
+		str+="<details class='people-on-list "+medal+"'>";
+			str+="<summary class='people-info'>";
+				str+="<span class='position'>"+(position+1)+"º</span>";
+				str+="<span class='name'>"+name+"</span>";
+				str+="<span class='position'>"+problems.length+"</span>";
+			str+="</summary>";
+			str+="<div class='table-wrapper'>";
+				str+="<div class='row'>";
+					for (let i = 0; i < problems.length; i++){
+						str+="<div class='col-md-2 col-sm-5'>";
+							str+="<a href='"+problems[i].url+"'>"+problems[i].name+"</a>";
+						str+="</div>";
+					}
+				str+="</div>";
+			str+="</div>";
+		str+="</details>";
+		return str;
+	}
+</script>
+</html>
