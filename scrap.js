@@ -2,7 +2,7 @@ const request = require('request');
 const cheerio = require('cheerio');
 const NAMES = ['uc_pierry', 'uc_henrique', 'uc_brenda','uc_pedroaug',
 		'uc_bruno', 'uc_yasmin', 'uc_ramon', 'uc_renatomoran',
-		'uc_philipemosv', 'uc_luiz', 'uc_joicepaz', 'uc_brunolima'];
+		'uc_philipemosv', 'uc_luiz', 'uc_joicepaz', 'uc_brunolima', 'uc_lihdi'];
 var BD = {
 	arquivo : "dados.txt",
 	ultimoUpdate : "2017-5-21 00:00:00",
